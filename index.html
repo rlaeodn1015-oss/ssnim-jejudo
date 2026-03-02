@@ -1473,29 +1473,92 @@
     </script>
 
     <script>
-      (function () {
-        var seatEl = document.getElementById("seatCount");
-        var seatInline = document.getElementById("seatCountInline");
+  (function () {
+    var EVENTS = [
+      { label: "3월 25-26일 (수,목)", seats: 1 },
+      { label: "3월 28-29일 (토,일)", seats: 2 }
+    ];
+
+    function qs(sel) { return document.querySelector(sel); }
+
+    var seatEl = document.getElementById("seatCount");
+    var seatInline = document.getElementById("seatCountInline");
+
+    var badge = qs(".seat-badge");
+    if (badge && !qs("#eventSelect")) {
+      var wrap = document.createElement("div");
+      wrap.style.display = "inline-flex";
+      wrap.style.gap = "10px";
+      wrap.style.alignItems = "center";
+
+      var select = document.createElement("select");
+      select.id = "eventSelect";
+      select.setAttribute("aria-label", "일정 선택");
+      select.style.padding = "10px 12px";
+      select.style.border = "1px solid var(--border)";
+      select.style.background = "rgba(255,255,255,0.9)";
+      select.style.fontWeight = "900";
+      select.style.cursor = "pointer";
+      select.style.borderRadius = "0";
+
+      EVENTS.forEach(function (e, idx) {
+        var opt = document.createElement("option");
+        opt.value = String(idx);
+        opt.textContent = e.label + " · 잔여 " + e.seats + "석";
+        select.appendChild(opt);
+      });
+
+      badge.parentNode.insertBefore(wrap, badge);
+      wrap.appendChild(select);
+      wrap.appendChild(badge);
+
+      function setSeats(n) {
+        if (seatInline) seatInline.textContent = String(n);
+
         if (!seatEl) return;
+        var startVal = parseInt(seatEl.textContent || "0", 10);
+        if (isNaN(startVal)) startVal = 0;
 
-        var TARGET = 2;
-
-        if (seatInline) seatInline.textContent = String(TARGET);
-
-        var current = 0;
-        var duration = 650;
-        var start = performance.now();
+        var current = startVal;
+        var TARGET = n;
+        var duration = 450;
+        var t0 = performance.now();
 
         function tick(now) {
-          var p = Math.min(1, (now - start) / duration);
+          var p = Math.min(1, (now - t0) / duration);
           var eased = 1 - Math.pow(1 - p, 3);
           var value = Math.max(0, Math.round(current + (TARGET - current) * eased));
           seatEl.textContent = String(value);
           if (p < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
-      })();
-    </script>
+      }
+
+      select.addEventListener("change", function () {
+        var idx = parseInt(select.value, 10);
+        setSeats(EVENTS[idx].seats);
+
+        var hidden = document.getElementById("selectedSchedule");
+        if (hidden) hidden.value = EVENTS[idx].label;
+      });
+
+      var hiddenInput = document.getElementById("selectedSchedule");
+      if (!hiddenInput) {
+        hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.id = "selectedSchedule";
+        hiddenInput.name = "희망일정";
+        hiddenInput.value = EVENTS[0].label;
+        var form = document.getElementById("campForm");
+        if (form) form.appendChild(hiddenInput);
+      } else {
+        hiddenInput.value = EVENTS[0].label;
+      }
+
+      setSeats(EVENTS[0].seats);
+    }
+  })();
+</script>
 
     <script>
       (function () {
@@ -1552,5 +1615,6 @@
     </script>
   </body>
 </html>
+
 
 
