@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-    <title>스승님 | 3월 한정 숏게임 마스터 실전 레슨</title>
+    <title>스승님 | 3월 한정 특별 1박2일 제주 캠프</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -34,27 +34,38 @@
         word-break: keep-all;
       }
       .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+      
       #viewerCount {
-        position: fixed; top: 100px; right: 12px; z-index: 10001;
-        background: rgba(255, 255, 255, 0.98);
+        position: fixed; 
+        top: 76px; 
+        right: 16px; 
+        z-index: 40; 
+        background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
-        padding: 10px 16px; border-radius: 14px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-        font-weight: 800; font-size: 12px; color: var(--primary);
-        border: 2px solid var(--primary-light);
-        display: flex; align-items: center; gap: 8px;
+        padding: 8px 14px; 
+        border-radius: 14px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        font-weight: 800; 
+        font-size: 11px; 
+        color: var(--primary);
+        border: 1px solid var(--primary-light);
+        display: flex; 
+        align-items: center; 
+        gap: 6px;
         white-space: nowrap;
+        transition: all 0.3s ease;
       }
       #viewerCount::before {
-        content: ""; width: 8px; height: 8px; background: #22c55e;
+        content: ""; width: 7px; height: 7px; background: #22c55e;
         border-radius: 50%; display: inline-block;
         animation: pulse 2s infinite;
       }
       @keyframes pulse {
         0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
         100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
       }
+
       #liveNotice {
         position: fixed; bottom: 85px; left: 12px; right: 12px;
         z-index: 9999; display: none;
@@ -66,10 +77,12 @@
         max-width: 420px; margin: 0 auto;
       }
       @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
       @media (min-width: 768px) {
-        #viewerCount { top: 25px; right: 25px; font-size: 14px; padding: 12px 20px; }
+        #viewerCount { top: 25px; right: 25px; font-size: 14px; padding: 12px 20px; z-index: 10001; }
         #liveNotice { bottom: 35px; left: 35px; right: auto; margin: 0; padding: 18px 24px; font-size: 15px; }
       }
+      
       .section { padding: 100px 0; position: relative; }
       .section-alt { 
         background: radial-gradient(circle at 10% 10%, rgba(85,107,47,0.05), transparent 40%),
@@ -121,6 +134,12 @@
       }
       .input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
       #timer { color: #e03131; font-family: monospace; font-size: 24px; }
+      
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+      }
+
       @media (max-width: 860px) {
         .grid-3, .grid-2 { grid-template-columns: 1fr; }
         .h1 { font-size: 32px; }
@@ -130,7 +149,7 @@
   </head>
   <body>
     <div id="viewerCount">
-      현재 <span id="count">6</span>명이 캠프를 보고 있습니다
+      현재 <span id="count">25</span>명이 캠프를 보고 있습니다
     </div>
     <div id="liveNotice">
       <span id="noticeText"></span>
@@ -175,7 +194,7 @@
             <p className="text-red-600 font-black text-sm md:text-lg tracking-tight">
               🚨 특별 상담 혜택 마감까지 <span className="tabular-nums font-mono">{min}:{sec.toString().padStart(2, "0")}</span>
             </p>
-            <p className="text-red-400 text-[10px] md:text-xs font-bold mt-1 tracking-tight">지금 신청서를 작성해야 3월 우선 배정권이 부여됩니다.</p>
+            <p className="text-red-400 text-[10px] md:text-xs font-bold mt-1 tracking-tight">지금 신청서를 작성하시면 3월 캠프 우선 배정권이 부여됩니다.</p>
           </div>
         );
       };
@@ -219,22 +238,22 @@
         <section className="pt-28 md:pt-44 pb-12 md:pb-24 px-5 bg-white relative text-center">
           <div className="max-w-6xl mx-auto relative z-10">
             <div style={{ display: "flex", justifyContent: "center", gap: "8px", flexWrap: "wrap", marginBottom: "12px" }}>
-              <div className="pill">2025 시즌 첫 필드 캠프 🌿</div>
-              <div className="pill" style={{ background: "#fff", border: "1px solid var(--primary)", color: "var(--primary)" }}>제주 아덴힐 CC 프라이빗 캠프</div>
+              <div className="pill">2026 스승님 시즌 첫 제주 캠프 🌿</div>
+              <div className="pill" style={{ background: "#fff", border: "1px solid var(--primary)", color: "var(--primary)" }}>제주 아덴힐CC 프라이빗 캠프</div>
             </div>
             <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "20px", flexWrap: "wrap" }}>
                 <span className="bg-slate-900 text-white px-3 py-1 rounded-full text-xs font-bold">3/25(평일) 잔여 1석</span>
                 <span className="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200">3/28-29(주말) 2인 가능</span>
                 <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold border border-yellow-200">2인 신청 시 일정 조율 가능</span>
             </div>
-            <h1 className="h1">연습장 싱글이신가요?<br/>필드에선 <span>백돌이</span>인 당신을 위해</h1>
-            <p style={{ fontSize: "20px", color: "var(--muted)", fontWeight: "600" }}>연습장 100시간보다 확실한 한 번의 필드 경험,<br/>서수연 프로의 36H 밀착 제주 캠프</p>
+            <h1 className="h1">스크린, 연습장 싱글이신가요?<br/>필드에선 <span>백돌이</span>인 당신을 위해</h1>
+            <p style={{ fontSize: "20px", color: "var(--muted)", fontWeight: "600" }}>연습장 100시간보다 확실한 한 번의 필드 경험,<br/>서수연 스승님의 36H 밀착 제주 골프</p>
             <p style={{ marginTop: "40px", fontWeight: "700", color: "#444", background: "var(--primary-light)", display: "inline-block", padding: "15px 30px", borderRadius: "20px", fontSize: "16px" }}>
-              지금 이 페이지를 보고 있다면 이미 당신도 알고 있을 겁니다.<br/>
-              연습장 스윙과 필드 스코어는 <b>전혀 다른 게임</b>이라는 것을.
+              지금 이 페이지를 보고 있는분, 당신도 알고 있을 겁니다<br/>
+              연습장과 필드 스코어는 <b>전혀 다른 게임</b>이라는 것을.
             </p>
             <div style={{ marginTop: "40px" }}>
-              <a href="#apply" className="btn">캠프 신청 가능 확인 ✨</a>
+              <a href="#apply" className="btn">제주캠프 우선권 확보 ✨</a>
             </div>
           </div>
         </section>
@@ -267,9 +286,9 @@
               <h2 style={{ fontSize: "36px", margin: "10px 0" }}>서수연 프로</h2>
               <p style={{ fontWeight: "800", fontSize: "19px", color: "var(--primary)", marginBottom: "20px" }}>"가진 스윙으로 최고의 스코어를<br/>만들어내는 지름길을 알려드립니다."</p>
               <ul style={{ listStyle: "none", padding: "0", fontWeight: "600", color: "var(--muted)", lineHeight: "2" }}>
-                <li>• 필드 코스 매니지먼트 실전 전략 전문가</li>
-                <li>• 강남 프리미엄 프라이빗 레슨 스튜디오 운영</li>
-                <li>• 데이터 기반 스윙 분석 및 교정 10년 노하우</li>
+                <li>• 선수경험, 필드 코스 매니지먼트 실전 전략 전문가</li>
+                <li>• 강남 프리미엄 프라이빗 레슨 스튜디오 누적회원 1,000+</li>
+                <li>• 기본 스윙 분석 및 필드 스코어 교정 10년 노하우</li>
               </ul>
               <div style={{ marginTop: "30px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a href="https://www.instagram.com/s.o_o.yeon/" target="_blank" className="btn btn-outline" style={{ padding: "12px 24px", fontSize: "14px" }}>인스타그램 ↗</a>
@@ -282,27 +301,27 @@
       const Curriculum = () => (
         <Section className="section-alt">
           <div className="container">
-            <h2 className="h2 center">캠프 하루 <span>스토리</span></h2>
+            <h2 className="h2 center">캠프 하루 <span>일정</span></h2>
             <div style={{ maxWidth: "800px", margin: "40px auto", display: "flex", flexDirection: "column", gap: "20px" }}>
               <div className="card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 <div style={{ fontWeight: "900", fontSize: "24px", color: "var(--primary)", borderRight: "2px solid #eee", paddingRight: "20px" }}>AM</div>
                 <div>
-                  <h4 style={{ margin: "0" }}>첫 티샷의 긴장감 해소</h4>
+                  <h4 style={{ margin: "0" }}>첫 티샷 문제점 해소</h4>
                   <p className="muted" style={{ margin: "5px 0 0" }}>서수연 프로가 바로 옆에서 당신의 에이밍과 루틴을 잡아드립니다.</p>
                 </div>
               </div>
               <div className="card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 <div style={{ fontWeight: "900", fontSize: "24px", color: "var(--primary)", borderRight: "2px solid #eee", paddingRight: "20px" }}>PM</div>
                 <div>
-                  <h4 style={{ margin: "0" }}>지형별 세컨샷 정복</h4>
+                  <h4 style={{ margin: "0" }}>클럽별, 지형별 세컨샷 정복</h4>
                   <p className="muted" style={{ margin: "5px 0 0" }}>라이와 바람을 고려한 영리한 클럽 선택법을 현장에서 바로 배웁니다.</p>
                 </div>
               </div>
               <div className="card" style={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 <div style={{ fontWeight: "900", fontSize: "24px", color: "var(--primary)", borderRight: "2px solid #eee", paddingRight: "20px" }}>EVE</div>
                 <div>
-                  <h4 style={{ margin: "0" }}>영상 분석 & 전략 수립</h4>
-                  <p className="muted" style={{ margin: "5px 0 0" }}>당일 촬영한 영상을 함께 보며 내일의 스코어를 위한 전략을 짭니다.</p>
+                  <h4 style={{ margin: "0" }}>필드 분석 & 스코어 전략 수립</h4>
+                  <p className="muted" style={{ margin: "5px 0 0" }}>당일 라운드를 복기하며 내일의 스코어를 위한 피드백을 진행합니다.</p>
                 </div>
               </div>
             </div>
@@ -315,14 +334,14 @@
       const Reviews = () => (
         <Section id="reviews">
           <div className="container center">
-            <h2 className="h2">먼저 경험한 <span>골퍼들의 증언</span></h2>
+            <h2 className="h2">진짜 회원들의 <span>100% 증언</span></h2>
             <div className="grid grid-2">
               <div className="card" style={{ textAlign: "left", fontSize: "18px", lineHeight: "1.6" }}>
-                "프로님이 맬착해서 저만 봐주시니까 캠프 비용이 전혀 아깝지 않았습니다. 덕분에 드디어 백돌이 탈출했습니다! 그리고 같이 추억쌓아서 너무 좋았어요"
+                "프로님이 밀착해서 봐주시니까 캠프 비용이 전혀 아깝지 않았습니다. 덕분에 드디어 백돌이 탈출했습니다! 그리고 같이 추억쌓아서 너무 좋았어요"
                 <br/><br/><b style={{ color: "var(--primary)" }}>회원 김OO님</b>
               </div>
               <div className="card" style={{ textAlign: "left", fontSize: "18px", lineHeight: "1.6" }}>
-                "제주도 바람 때문에 늘 골프가 스트레스였는데, 이번 캠프에서 바람 읽는 법과 클럽 선택을 제대로 배웠습니다. 인생 라운딩이었어요👍"
+                "늘 골프가 스트레스였는데, 서수연 스승님의 필드레슨에서 바람 읽는 법과 상황별 클럽 선택을 제대로 배웠습니다. 인생 라운딩이었어요👍"
                 <br/><br/><b style={{ color: "var(--primary)" }}>회원 이OO님</b>
               </div>
             </div>
@@ -361,7 +380,7 @@
                 <div className="text-center py-12">
                   <div className="text-5xl mb-6">🏌️‍♂️</div>
                   <h3 className="text-xl font-black mb-2">상담 예약 접수 완료</h3>
-                  <p className="text-xs text-slate-500 font-medium leading-relaxed px-4">매니저가 확인 후 30분 내로 <br/> 카카오톡 안내를 보내드립니다.</p>
+                  <p className="text-xs text-slate-500 font-medium leading-relaxed px-4">스승님 담당자 확인 후 <br/> 카카오톡 안내를 보내드립니다.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -389,7 +408,7 @@
                     <textarea name="고민" className="input" style={{ height: "120px", borderRadius: "24px", margin: 0 }} placeholder="예: 어프로치 입스 해결하고 싶어요 / 친구와 2인 신청합니다" required></textarea>
                   </div>
                   <button disabled={status==="SUBMITTING"} className="btn" style={{ width: "100%", padding: "18px 0", marginTop: "10px" }}>
-                    {status === "SUBMITTING" ? "전송 중..." : "캠프 참여 신청하기 ✨"}
+                    {status === "SUBMITTING" ? "전송 중..." : "캠프 자리 확보하기✨"}
                   </button>
                 </form>
               )}
@@ -419,11 +438,11 @@
     </script>
     <script>
       function updateViewer(){
-        const num = Math.floor(Math.random()*5)+4; 
+        const num = Math.floor(Math.random()*12)+21; 
         const countEl = document.getElementById("count");
         if(countEl) countEl.textContent=num;
       }
-      setInterval(updateViewer, 4000);
+      setInterval(updateViewer, 5000);
       const names=["김*수","이*훈","박*희","최*석","정*아","한*운","윤*준","조*민"];
       const actions=[
         "님이 지금 캠프 상담을 요청했습니다",
