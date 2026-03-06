@@ -1,405 +1,637 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-    <title>스승님 | 3월 한정 VVIP 1박2일 제주 캠프</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스승님 | 제주 프라이빗 필드레슨 캠프</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-      :root {
-        --primary: #556b2f; 
-        --primary-light: #f1f5e9;
-        --secondary: #d4a373;
-        --bg: #fdfdfb;
-        --text: #2d2a26;
-        --muted: #79716b;
-        --white: #ffffff;
-        --radius-lg: 40px;
-        --radius-md: 24px;
-        --shadow: 0 15px 40px rgba(85, 107, 47, 0.08);
-        --max: 1000px;
-      }
-      * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-      html { scroll-behavior: smooth; }
-      body {
-        margin: 0;
-        font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.8;
-        word-break: keep-all;
-      }
-      
-      #viewerCount {
-        position: fixed; top: 76px; right: 16px; z-index: 40; 
-        background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-        padding: 8px 14px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-        font-weight: 800; font-size: 11px; color: var(--primary);
-        border: 1px solid var(--primary-light); display: flex; align-items: center; gap: 6px;
-        white-space: nowrap; transition: all 0.3s ease;
-      }
-      #viewerCount::before {
-        content: ""; width: 7px; height: 7px; background: #22c55e;
-        border-radius: 50%; display: inline-block; animation: pulse 2s infinite;
-      }
-      @keyframes pulse {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-      }
-
-      #liveNotice {
-        position: fixed; bottom: 85px; left: 12px; right: 12px;
-        z-index: 9999; display: none; background: var(--white); padding: 14px 20px; border-radius: 18px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.18); font-weight: 700; font-size: 14px; color: var(--text);
-        border: 1px solid var(--primary-light); animation: slideUp 0.5s ease-out; max-width: 420px; margin: 0 auto;
-      }
-      @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-      @media (min-width: 768px) {
-        #viewerCount { top: 25px; right: 25px; font-size: 14px; padding: 12px 20px; z-index: 10001; }
-        #liveNotice { bottom: 35px; left: 35px; right: auto; margin: 0; padding: 18px 24px; font-size: 15px; }
-      }
-      
-      .section { padding: 80px 0; position: relative; }
-      .section-alt { 
-        background: radial-gradient(circle at 10% 10%, rgba(85,107,47,0.05), transparent 40%),
-                    radial-gradient(circle at 90% 90%, rgba(212,163,115,0.05), transparent 40%);
-        border-radius: 60px;
-      }
-      .h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 900; line-height: 1.3; margin-bottom: 30px; letter-spacing: -0.04em; text-align: center; }
-      .h2 span { color: var(--primary); }
-      .pill { display: inline-block; padding: 6px 18px; background: var(--primary-light); color: var(--primary); font-weight: 900; font-size: 12px; border-radius: 999px; margin-bottom: 12px; }
-      .card { background: var(--white); padding: 30px; border-radius: var(--radius-md); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.03); transition: transform 0.3s; }
-      .card:hover { transform: translateY(-10px); }
-      .h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 900; line-height: 1.2; margin-bottom: 24px; }
-      .h1 span { color: var(--primary); }
-      .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: #fff; font-weight: 800; border: 0; padding: 18px 36px; border-radius: 999px; transition: all 0.4s; cursor: pointer; font-size: 17px; text-decoration: none; }
-      .btn-outline { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
-      .apply-wrap { max-width: 650px; margin: 40px auto 100px; background: #fff; padding: 40px 20px; border-radius: var(--radius-md); box-shadow: 0 40px 80px rgba(0,0,0,0.1); position: relative; z-index: 10; border: 2px solid var(--primary); }
-      @media (min-width: 768px) { .apply-wrap { padding: 50px; } }
-      .input { width: 100%; padding: 18px; border-radius: 20px; border: 1px solid #eee; background: #fcfcfc; font-size: 16px; margin-bottom: 20px; font-family: inherit; }
-      
-      .faq-item { border-bottom: 1px solid #f1f1f1; }
-      .faq-question { padding: 24px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 17px; }
-      .faq-answer { max-height: 0; overflow: hidden; transition: all 0.4s ease-out; color: var(--muted); font-size: 15px; }
-      .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 24px; }
-      .faq-item.active .faq-icon { transform: rotate(180deg); }
-      .faq-icon { transition: transform 0.4s; color: var(--primary); }
-
-      @media (max-width: 860px) {
-        .h1 { font-size: 32px; }
-        .section { padding: 60px 0; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="viewerCount">현재 <span id="count">25</span>명이 캠프를 보고 있습니다</div>
-    <div id="liveNotice"><span id="noticeText"></span></div>
-    <div id="root"></div>
-    <script type="text/babel">
-      const { useEffect, useRef, useState } = React;
-      const scrollToId = (id) => {
-        const el = document.getElementById(id);
-        if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: "smooth" });
-      };
-
-      const Section = ({ id, className = "", children }) => {
-        const ref = useRef(null);
-        const [isVisible, setIsVisible] = useState(false);
-        useEffect(() => {
-          const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); }
-          }, { threshold: 0.05 });
-          if (ref.current) observer.observe(ref.current);
-          return () => observer.disconnect();
-        }, []);
-        return (
-          <section id={id} ref={ref} className={`section px-5 ${className} transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            <div className="max-w-6xl mx-auto">{children}</div>
-          </section>
-        );
-      };
-
-      const FormTimer = () => {
-        const [seconds, setSeconds] = useState(900);
-        useEffect(() => {
-          if (seconds <= 0) return;
-          const t = setInterval(() => setSeconds(s => s - 1), 1000);
-          return () => clearInterval(t);
-        }, [seconds]);
-        const min = Math.floor(seconds / 60);
-        const sec = seconds % 60;
-        return (
-          <div className="bg-red-50 border border-red-100 p-4 rounded-2xl mb-8 text-center">
-            <p className="text-red-600 font-black text-sm md:text-lg tracking-tight">🚨 마감 임박! 혜택 종료까지 <span className="tabular-nums font-mono">{min}:{sec.toString().padStart(2, "0")}</span></p>
-            <p className="text-red-400 text-[10px] md:text-xs font-bold mt-1 tracking-tight">지금 신청서를 작성하시면 우선 순위 배정 됩니다.</p>
-          </div>
-        );
-      };
-
-      const Header = () => {
-        const [timeLeft, setTimeLeft] = useState({ h: 0, m: 0, s: 0 });
-        useEffect(() => {
-          const target = new Date(); target.setHours(23, 59, 59);
-          const timer = setInterval(() => {
-            const now = new Date(); const diff = target - now;
-            if (diff <= 0) target.setDate(target.getDate() + 1);
-            else setTimeLeft({ h: Math.floor((diff / (1000 * 60 * 60)) % 24), m: Math.floor((diff / 1000 / 60) % 60), s: Math.floor((diff / 1000) % 60) });
-          }, 1000);
-          return () => clearInterval(timer);
-        }, []);
-        return (
-          <nav className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
-            <div className="max-w-6xl mx-auto px-5 py-3.5 flex justify-between items-center">
-              <div className="text-xl font-[900] tracking-tighter text-emerald-600" onClick={() => window.scrollTo({top:0, behavior:"smooth"})}>스승님<span className="text-slate-300 font-normal ml-0.5 text-sm italic uppercase">SSNIM</span></div>
-              <div className="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-black flex items-center gap-1.5 tabular-nums">
-                <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
-                상담 마감 {timeLeft.h.toString().padStart(2, "0")}:{timeLeft.m.toString().padStart(2, "0")}:{timeLeft.s.toString().padStart(2, "0")}
-              </div>
-            </div>
-          </nav>
-        );
-      };
-
-      const Hero = () => (
-        <section className="pt-28 md:pt-44 pb-12 px-5 bg-white text-center">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex justify-center gap-2 mb-4 flex-wrap">
-              <div className="pill">2026 스승님 시즌 첫 제주 캠프 🌿</div>
-              <div className="pill" style={{ background: "#fff", border: "1px solid var(--primary)" }}>제주 아덴힐CC VVIP CAMP</div>
-            </div>
-            <h1 className="h1">연습장,스크린 싱글이신가요?<br/>필드 <span>백돌이</span>인 당신을 위해</h1>
-            <p className="text-lg md:text-xl text-slate-500 font-bold mb-8">서수연 스승님의 36H 밀착 제주 필드 레슨</p>
-            <a href="#apply" className="btn">제주캠프 우선권 확보 ✨</a>
-          </div>
-        </section>
-      );
-
-      const Stats = () => (
-        <div className="bg-white border-y border-slate-50 py-10 px-5">
-          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              {l: "3/25 잔여", v: "단 1자리", c: "text-red-500"},
-              {l: "3/28 주말", v: "2인 가능", c: "text-slate-900"},
-              {l: "스승님 혜택", v: "30만원 상당 할인", c: "text-emerald-600"},
-              {l: "단독 증정", v: "롱티/앱 포인트", c: "text-slate-900"}
-            ].map(s => (
-              <div key={s.l}>
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{s.l}</div>
-                <div className={`text-xl md:text-3xl font-[900] ${s.c}`}>{s.v}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-
-      const PriceBenefit = () => (
-        <Section className="bg-[#fcfcf9]">
-          <h2 className="h2 italic uppercase">SSNIM <span>Benefit</span></h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-            <div className="card border-2 border-emerald-600/20 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-red-500 text-white px-3 py-1 text-[10px] font-black uppercase rounded-bl-lg">스승님 단독 혜택</div>
-              <h3 className="text-xl font-black mb-6 tracking-tighter">캠프 참가 비용</h3>
-              <div className="space-y-2">
-                <div className="text-slate-400 font-bold line-through text-lg italic">기존가 1,700,000원</div>
-                <div className="text-4xl md:text-5xl font-black text-emerald-700 tracking-tighter leading-none">1,500,000원 <span className="text-base font-bold text-emerald-600">(-20만 원)</span></div>
-              </div>
-              <p className="mt-6 text-xs text-slate-400 font-bold">* 1박 2일 레슨비, 그린피+카트비 40평대 숙박, 조식, 송영차량 포함 (항공/캐디피 별도)</p>
-            </div>
-            <div className="card bg-emerald-900 text-white border-0">
-              <h3 className="text-xl font-black mb-6 text-emerald-400 italic tracking-tighter">+ SPECIAL GIFT</h3>
-              <ul className="space-y-5">
-                <li className="flex gap-4">
-                  <div className="bg-emerald-700 p-1.5 rounded-full text-white text-[10px] shrink-0">✔</div>
-                  <div>
-                    <div className="font-black text-lg tracking-tight">스승님 앱 50,000 포인트 지급</div>
-                    <p className="text-emerald-300/70 text-sm">캠프 후 앱 내 레슨 결제 활용 가능</p>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <div className="bg-emerald-700 p-1.5 rounded-full text-white text-[10px] shrink-0">✔</div>
-                  <div>
-                    <div className="font-black text-lg tracking-tight">스승님 시그니처 롱티 세트</div>
-                    <p className="text-emerald-300/70 text-sm">필드 최고의 퍼포먼스를 위한 전용 롱티</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Section>
-      );
-
-      const Instructor = () => (
-        <Section className="bg-white" id="pro">
-          <div className="flex flex-col md:flex-row gap-10 items-center bg-white p-6 md:p-12 rounded-[40px] shadow-sm border border-slate-50">
-            <div className="w-52 h-72 bg-emerald-50 rounded-[100px] overflow-hidden shrink-0 shadow-lg">
-              <img src="https://images.unsplash.com/photo-1593111774240-d529f12cf4bb?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="서수연 프로" />
-            </div>
-            <div className="text-center md:text-left flex-1">
-              <span className="pill">KLPGA CLASS A</span>
-              <h2 className="text-3xl font-black mt-2 mb-4">서수연 스승님</h2>
-              <p className="font-extrabold text-lg text-emerald-700 mb-6 leading-relaxed italic">"당신의 스윙으로 최고의 스코어를<br/>만들어내는 진짜 공략법을 전수합니다."</p>
-              <ul className="space-y-2 text-sm font-bold text-slate-500 mb-8">
-                <li>• 선수 경험 필드 코스 매니지먼트 및 실전 전략 전문가</li>
-                <li>• 강남 프라이빗 레슨 스튜디오 누적 회원 1,000+</li>
-                <li>• 10년 이상의 필드 레슨 교정 및 스코어 변화 노하우</li>
-              </ul>
-              <div className="flex gap-3 flex-wrap justify-center md:justify-start">
-                <a href="https://www.instagram.com/s.o_o.yeon/" target="_blank" className="btn btn-outline py-3 px-6 text-sm">서수연스승 인스타그램 ↗</a>
-                <a href="http://pf.kakao.com/_kxawRn/chat" target="_blank" className="btn py-3 px-6 text-sm">스승님 카톡문의</a>
-              </div>
-            </div>
-          </div>
-        </Section>
-      );
-
-      const Curriculum = () => (
-        <Section className="section-alt">
-          <h2 className="h2 center">캠프 하루 <span>일정</span></h2>
-          <div className="max-w-2xl mx-auto space-y-4 mt-10">
-            {[
-              {t: "AM", title: "첫 티샷의 문제,스윙 분석", d: "프로님이 옆에서 에이밍과 고민,스윙을 직접 교정해 드립니다."},
-              {t: "PM", title: "상황별 세컨샷 정복", d: "라이와 바람을 고려한 영리한 클럽 선택법을 현장에서 배웁니다."},
-              {t: "EVE", title: "라운드 분석 & 스코어 전략", d: "당일 라운드를 복기하며 내일의 전략을 함께 세웁니다."}
-            ].map((item, idx) => (
-              <div key={idx} className="card flex items-center gap-6 p-6">
-                <div className="text-2xl font-black text-emerald-600 border-r border-slate-100 pr-6 shrink-0">{item.t}</div>
-                <div>
-                  <h4 className="font-black text-slate-800">{item.title}</h4>
-                  <p className="text-slate-500 text-sm mt-1 leading-snug">{item.d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-      );
-
-      const Reviews = () => (
-        <Section id="reviews">
-          <h2 className="h2 center">회원들의 <span>리얼 증언</span></h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
-            <div className="card text-base leading-relaxed italic border-l-4 border-emerald-600">
-              "프로님이 밀착 레슨을 해주시니 비용이 하나도 아깝지 않았습니다. 덕분에 백돌이 드디어 탈출했습니다!"
-              <div className="mt-4 font-black not-italic text-emerald-600 text-sm">- 회원 김OO님</div>
-            </div>
-            <div className="card text-base leading-relaxed italic border-l-4 border-emerald-600">
-              "스코어가 줄지 않아 힘들었는데, 이번 캠프에서 클럽 선택과 스코어 방어하는 방법을 제대로 배우고 평균 8타 줄였습니다."
-              <div className="mt-4 font-black not-italic text-emerald-600 text-sm">- 회원 이OO님</div>
-            </div>
-          </div>
-        </Section>
-      );
-
-      const FAQ = () => {
-        const [activeIdx, setActiveIdx] = useState(0);
-        const faqs = [
-          { q: "백돌이도 참여 가능한가요?", a: "네, 실력별 맞춤 레슨이 진행되므로 초보자부터 싱글 골퍼까지 모두 참여 가능합니다." },
-          { q: "준비물은 무엇인가요?", a: "개인 클럽과 골프복, 제주도 여행처럼 준비해 주세요. 숙박과 조식은 포함되어 있습니다." },
-          { q: "1인 신청도 가능한가요?", a: "물론입니다. 혼자 오시는 분들도 많으시며 프로님과 동반자가 즐겁게 동행합니다." },
-          { q: "항공권과 캐디피는 별도인가요?", a: "네, 항공권과 캐디피는 개별 부담입니다. 나머지는 모두 포함되어 있습니다" }
-        ];
-        return (
-          <Section className="bg-white" id="faq">
-            <h2 className="h2 italic uppercase text-center">FAQ</h2>
-            <div className="max-w-2xl mx-auto mt-10 border-t border-slate-900">
-              {faqs.map((f, i) => (
-                <div key={i} className={`faq-item ${activeIdx === i ? "active" : ""}`} onClick={() => setActiveIdx(activeIdx === i ? -1 : i)}>
-                  <div className="faq-question"><span>{f.q}</span><span className="faq-icon text-2xl shrink-0 ml-4">↓</span></div>
-                  <div className="faq-answer"><div className="py-4 leading-relaxed font-medium">{f.a}</div></div>
-                </div>
-              ))}
-            </div>
-          </Section>
-        );
-      };
-
-      const ApplicationForm = () => {
-        const [status, setStatus] = useState("IDLE");
-        const handleSubmit = async (e) => {
-          e.preventDefault(); setStatus("SUBMITTING");
-          const data = Object.fromEntries(new FormData(e.currentTarget));
-          try {
-            const res = await fetch("https://formspree.io/f/mbdakbon", { method: "POST", body: JSON.stringify(data), headers: { Accept: "application/json", "Content-Type": "application/json" } });
-            if (res.ok) setStatus("SUCCESS"); else setStatus("ERROR");
-          } catch { setStatus("ERROR"); }
-        };
-        return (
-          <Section id="apply" className="bg-[#fcfcf9]">
-            <div className="apply-wrap border-slate-900">
-              <div style={{ position: "absolute", top: "-22px", left: "50%", transform: "translateX(-50%)", background: "#111", color: "#fff", padding: "8px 24px", borderRadius: "10px", fontSize: "12px", fontWeight: "900", whiteSpace: "nowrap", boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}>🏆 2인 신청 시 일정 우선 확정</div>
-              <h3 className="text-2xl font-black mb-8 text-center mt-4 tracking-tighter">제주 캠프 상담 신청</h3>
-              <FormTimer />
-              {status === "SUCCESS" ? (
-                <div className="text-center py-10 font-black">상담 예약 접수 완료! 스승님 담당자가 곧 연락드리겠습니다.</div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <select className="input font-bold" name="일정">
-                    <option>3월 25-26일 (평일) - 잔여 1석</option>
-                    <option>3월 28-29일 (주말) - 2인 신청 가능</option>
-                    <option>개별 일정 조율 요청</option>
-                  </select>
-                  <input required name="이름" placeholder="성함" className="input" />
-                  <input required name="연락처" type="tel" placeholder="연락처 (010-0000-0000)" className="input" />
-                  <textarea name="고민" className="input h-32" placeholder="해결하고 싶은 고민을 구체적으로 적어주세요."></textarea>
-                  <button disabled={status==="SUBMITTING"} className="btn w-full mt-4 font-black bg-slate-900 text-lg shadow-xl active:scale-95 transition-transform">
-                    {status === "SUBMITTING" ? "전송 중..." : "캠프 자리 확보 하기 ✨"}
-                  </button>
-                </form>
-              )}
-            </div>
-          </Section>
-        );
-      };
-
-      const App = () => (
-        <div className="bg-white min-h-screen pb-24 text-slate-900">
-          <Header />
-          <Hero />
-          <Stats />
-          <PriceBenefit />
-          <Instructor />
-          <Curriculum />
-          <Reviews />
-          <FAQ />
-          <ApplicationForm />
-          <footer className="py-16 text-center text-[10px] text-slate-300 font-black uppercase border-t border-slate-50 tracking-widest bg-white">© 2026 SSNIM. All rights reserved.</footer>
-          <div className="fixed bottom-6 left-4 right-4 z-[50] flex gap-2">
-            <a href="https://ssnim.com/install.html" target="_blank" className="flex-1 py-4 bg-slate-100 text-slate-900 rounded-2xl font-black text-[11px] flex items-center justify-center shadow-lg active:scale-95">스승님 앱 다운로드</a>
-            <button onClick={() => scrollToId("apply")} className="flex-[2.5] py-4 bg-[#556b2f] text-white rounded-2xl font-black text-[13px] shadow-2xl active:scale-95 transition-transform text-center">3월 잔여석 무료 상담 신청</button>
-          </div>
-        </div>
-      );
-      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-    </script>
-    <script>
-      function updateViewer(){
-        const num = Math.floor(Math.random()*12)+21;
-        const countEl = document.getElementById("count");
-        if(countEl) countEl.textContent=num;
-      }
-      setInterval(updateViewer, 5000);
-      const names=["김*수","이*훈","박*희","최*석","정*아","한*운","윤*준","조*민"];
-      const actions=["님이 상담 요청중","님이 잔여석 확인","님이 신청서 작성중","님이 일정 문의중"];
-      function showNotice(){
-        const name = names[Math.floor(Math.random()*names.length)];
-        const action = actions[Math.floor(Math.random()*actions.length)];
-        const box = document.getElementById("liveNotice");
-        const text = document.getElementById("noticeText");
-        if(box && text) {
-          text.innerText = "🔥 " + name + " " + action;
-          box.style.display = "block";
-          setTimeout(() => { box.style.display = "none"; }, 4000);
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --soft-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            --deep-shadow: 0 30px 60px rgba(16, 185, 129, 0.15);
+            --btn-3d: inset 0 -4px 0 rgba(0, 0, 0, 0.1);
         }
-      }
-      setTimeout(() => { showNotice(); setInterval(showNotice, 9000); }, 3000);
-    </script>
-  </body>
-</html>
 
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            letter-spacing: -0.03em;
+            background-color: #f8fafc;
+            word-break: keep-all;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .card-3d {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: var(--soft-shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @media (min-width: 768px) {
+            .card-3d { border-radius: 2.5rem; }
+        }
+
+        .card-3d:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-premium {
+            box-shadow: var(--btn-3d), 0 15px 30px rgba(16, 185, 129, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-premium:active {
+            transform: translateY(2px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating { animation: float 3s ease-in-out infinite; }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+            50% { opacity: 1; transform: translateY(-5px) scale(1.02); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-bounce-in {
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FAQ Transition */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.active .faq-content {
+            max-height: 300px;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .shadow-inner-soft {
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="antialiased text-slate-900">
+
+    <!-- Header -->
+    <nav class="fixed top-3 left-3 right-3 md:top-4 md:left-4 md:right-4 z-[100]">
+        <div class="max-w-6xl mx-auto glass h-16 md:h-20 rounded-[1.5rem] md:rounded-[2.5rem] px-5 md:px-8 flex justify-between items-center shadow-xl">
+            <div class="text-xl md:text-2xl font-black tracking-tighter text-emerald-700">
+                스승님 <span class="text-slate-300 font-normal text-[9px] md:text-[10px] uppercase ml-1 tracking-widest text-slate-400">Jeju Tour</span>
+            </div>
+            <div class="flex items-center gap-2 md:gap-6">
+                <div class="hidden sm:flex items-center gap-3 py-1.5 px-3 bg-emerald-50 rounded-full border border-emerald-100 transition-all duration-500">
+                    <div class="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping"></div>
+                    <span class="text-[10px] font-black text-emerald-800 tabular-nums">현재 <span id="viewer-count">32</span>명 접속 중</span>
+                </div>
+                <div class="bg-slate-900 text-white px-3 py-2 md:px-5 md:py-2.5 rounded-full text-[10px] md:text-xs font-black flex items-center gap-1.5 md:gap-2 tabular-nums shadow-lg">
+                    <i data-lucide="clock" class="text-red-400 w-3 md:w-3.5"></i>
+                    <span id="header-timer">23:59:59</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 md:pt-48 pb-16 md:pb-24 px-5 md:px-6 text-center overflow-hidden relative">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 md:gap-3 px-4 py-1.5 md:px-6 md:py-2 bg-white rounded-full shadow-lg mb-8 md:mb-10 border border-slate-50">
+                <span class="w-1.5 h-1.5 md:w-2 md:h-2 bg-emerald-500 rounded-full"></span>
+                <span class="text-[10px] md:text-xs font-black text-slate-600 tracking-tight uppercase">2026 Season First: Jeju Adenhill</span>
+            </div>
+
+            <h1 class="text-4xl md:text-8xl font-black leading-tight md:leading-[1.1] mb-8 md:mb-10 tracking-tighter text-slate-900">
+                프로와 함께하는<br/>
+                <span class="text-emerald-600 italic">프라이빗 골프 여행</span>
+            </h1>
+
+            <p class="text-lg md:text-3xl text-slate-400 font-bold mb-10 md:mb-14 tracking-tight">
+                2인 플레이 · 36홀 집중 레슨 · VVIP 1:1 케어
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})" class="btn-premium w-full sm:w-auto px-10 py-5 md:px-12 md:py-6 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[1.5rem] md:rounded-[2rem] font-black text-xl md:text-2xl flex items-center justify-center gap-3 transform hover:scale-105">
+                    제주 캠프 상담 신청 <i data-lucide="arrow-right" class="w-5 md:w-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10 opacity-40">
+            <div class="absolute top-20 left-10 w-48 h-48 md:w-64 md:h-64 bg-emerald-200 rounded-full blur-[100px] md:blur-[120px] floating"></div>
+            <div class="absolute bottom-20 right-10 w-64 h-64 md:w-80 md:h-80 bg-blue-100 rounded-full blur-[120px] md:blur-[140px] floating" style="animation-delay: 1s;"></div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <div class="bg-red-50 border-y border-red-100 py-6 md:py-10 px-5 text-center">
+        <div class="max-w-4xl mx-auto">
+            <p class="font-black text-red-600 text-xl md:text-2xl tracking-tighter flex items-center justify-center gap-2">
+                <i data-lucide="alert-circle" class="w-5 md:w-6"></i> ⚠ 3월 단 2회만 진행되는 한정판 캠프
+            </p>
+            <div class="text-slate-600 font-bold mt-3 text-sm md:text-lg flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0">
+                현재 <span class="text-red-600 font-black bg-red-100 px-3 py-1 rounded-lg ml-1 shadow-sm">3/25 잔여 1자리</span>
+                <span class="hidden md:inline mx-4 opacity-20 text-slate-300">|</span>
+                <span class="text-red-600 font-black bg-red-100 px-3 py-1 rounded-lg mr-1 shadow-sm">3/28 잔여 2자리</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="max-w-6xl mx-auto px-5 md:px-6 mb-16 md:mb-24 mt-8 md:mt-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <div class="bg-red-50 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400">3/25 잔여</div>
+                <div class="text-base md:text-2xl font-black text-red-500 tracking-tighter">마감임박</div>
+            </div>
+            <div class="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400">3/28 주말</div>
+                <div class="text-base md:text-2xl font-black text-slate-900 tracking-tighter">신청 가능</div>
+            </div>
+            <div class="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400">레슨 방식</div>
+                <div class="text-base md:text-2xl font-black text-emerald-600 tracking-tighter">2인 밀착</div>
+            </div>
+            <div class="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400">누적 상담</div>
+                <div class="text-base md:text-2xl font-black text-slate-900 tracking-tighter">300건+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VVIP Care Section -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-slate-50 rounded-[2.5rem] md:rounded-[4rem] mx-3 md:mx-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 md:mb-16">
+                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3 md:mb-4 block text-emerald-500">The Difference</span>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tighter leading-tight">일반 캠프와는 차원이 다른<br/><span class="text-emerald-600 italic">VVIP 올인원 케어</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
+                <div class="card-3d p-8 md:p-10 flex flex-col items-start text-left">
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 text-emerald-600 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-8 shadow-inner-soft">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight">2인 플레이</h3>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">4인 북적이는 플레이가 아닌, 프로와 오직 둘이서 진행하는 프라이빗 라운드</p>
+                </div>
+                <div class="card-3d p-8 md:p-10 flex flex-col items-start text-left">
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 text-emerald-600 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-8 shadow-inner-soft">
+                        <i data-lucide="car"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight">전 일정 프로 직접 운전</h3>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">프로가 직접 차량으로 에스코트합니다. 당신은 오직 골프와 휴식에만 집중하세요.</p>
+                </div>
+                <div class="card-3d p-8 md:p-10 flex flex-col items-start text-left">
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 text-emerald-600 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-8 shadow-inner-soft">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight">실전 36홀 집중 레슨</h3>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">36홀 내내 프로가 옆에서 당신의 샷, 에이밍, 코스 공략을 실시간으로 교정합니다.</p>
+                </div>
+                <div class="card-3d p-8 md:p-10 flex flex-col items-start text-left">
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 text-emerald-600 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-8 shadow-inner-soft">
+                        <i data-lucide="utensils"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight">식사까지 함께하는 투어</h3>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">라운드 후 저녁 식사까지 프로와 함께하며 필드 위 비하인드 노하우를 공유합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Field Coaching Situations -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 md:mb-16">
+                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3 md:mb-4 block text-emerald-500">Real Field Training</span>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tighter leading-tight">필드에서 발생하는<br/><span class="text-emerald-600 italic">모든 상황을 내 것으로</span></h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+                <div class="bg-white p-5 md:p-10 rounded-[1.5rem] md:rounded-[2rem] text-center font-black text-sm md:text-xl text-slate-800 border border-slate-100 shadow-sm hover:shadow-lg transition-all transform hover:-translate-y-1">티샷 방향 교정</div>
+                <div class="bg-white p-5 md:p-10 rounded-[1.5rem] md:rounded-[2rem] text-center font-black text-sm md:text-xl text-slate-800 border border-slate-100 shadow-sm hover:shadow-lg transition-all transform hover:-translate-y-1">세컨샷 거리 판단</div>
+                <div class="bg-white p-5 md:p-10 rounded-[1.5rem] md:rounded-[2rem] text-center font-black text-sm md:text-xl text-slate-800 border border-slate-100 shadow-sm hover:shadow-lg transition-all transform hover:-translate-y-1">험난한 벙커 탈출</div>
+                <div class="bg-white p-5 md:p-10 rounded-[1.5rem] md:rounded-[2rem] text-center font-black text-sm md:text-xl text-slate-800 border border-slate-100 shadow-sm hover:shadow-lg transition-all transform hover:-translate-y-1">어프로치 거리감</div>
+                <div class="bg-white p-5 md:p-10 rounded-[1.5rem] md:rounded-[2rem] text-center font-black text-sm md:text-xl text-slate-800 border border-slate-100 shadow-sm hover:shadow-lg transition-all transform hover:-translate-y-1">퍼팅 라인 읽기</div>
+                <div class="bg-white p-5 md:p-10 rounded-[1.5rem] md:rounded-[2rem] text-center font-black text-sm md:text-xl text-slate-800 border border-slate-100 shadow-sm hover:shadow-lg transition-all transform hover:-translate-y-1">코스 공략 매니지먼트</div>
+            </div>
+            <p class="text-center text-slate-400 mt-10 font-bold text-base md:text-lg italic">"연습장이 아닌 실제 라운드 중에 즉각 교정합니다."</p>
+        </div>
+    </section>
+
+    <!-- Price Section -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-slate-950 text-white rounded-[2.5rem] md:rounded-[4rem] mx-3 md:mx-4 overflow-hidden relative mt-16 shadow-2xl">
+        <div class="absolute top-0 right-0 w-full h-full -z-0 opacity-10">
+            <div class="absolute -top-20 -right-20 w-64 h-64 md:w-96 md:h-96 bg-emerald-500 rounded-full blur-[100px] md:blur-[150px]"></div>
+        </div>
+        
+        <div class="text-center mb-12 md:mb-20 relative z-10">
+            <span class="text-emerald-400 font-black tracking-widest text-[10px] uppercase mb-3 md:mb-4 block">Special Offer</span>
+            <h2 class="text-3xl md:text-6xl font-black tracking-tighter leading-tight">오직 스승님 앱 회원에게만<br/><span class="text-emerald-400">특별한 혜택가</span></h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 relative z-10">
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg md:text-2xl font-black mb-6 md:mb-8 italic text-slate-300 tracking-tight">Full-Package Price</h3>
+                    <div class="space-y-1 md:space-y-2 mb-8 md:mb-10">
+                        <p class="text-slate-500 font-bold line-through text-base md:text-xl italic tracking-tighter">정가 1,700,000원</p>
+                        <p class="text-4xl md:text-7xl font-black text-white tracking-tighter">1,500,000<span class="text-xl md:text-2xl ml-1 md:ml-2">원</span></p>
+                    </div>
+                </div>
+                <ul class="space-y-3 md:space-y-4 text-slate-400 font-bold text-xs md:text-sm">
+                    <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-500 w-4"></i> 36H 그린피, 카트비 포함</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-500 w-4"></i> 40평대 리조트 & 조식 포함</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-500 w-4"></i> 서수연 프로 전 일정 케어 & 레슨비</li>
+                </ul>
+            </div>
+
+            <div class="bg-emerald-600 p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] shadow-2xl shadow-emerald-900/40 transform md:rotate-2">
+                <h3 class="text-lg md:text-2xl font-black mb-8 md:mb-10 italic uppercase text-emerald-100 tracking-wider">+ Member Benefits</h3>
+                <div class="space-y-6 md:space-y-8">
+                    <div class="flex gap-4 md:gap-5 items-start">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center shrink-0"><i data-lucide="star" class="text-white"></i></div>
+                        <div>
+                            <p class="text-lg md:text-xl font-black mb-1 text-white">스승님 포인트 5만P</p>
+                            <p class="text-emerald-100/70 text-[11px] md:text-sm font-medium">캠프 후 사후 레슨 결제 시 사용 가능</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 md:gap-5 items-start">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center shrink-0"><i data-lucide="shield-check" class="text-white"></i></div>
+                        <div>
+                            <p class="text-lg md:text-xl font-black mb-1 text-white">시그니처 롱티 세트</p>
+                            <p class="text-emerald-100/70 text-[11px] md:text-sm font-medium">캠프 참가자만을 위한 서수연 프로의 선물</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Limited Seats Alert -->
+    <section class="reveal py-16 md:py-24 px-5">
+        <div class="max-w-4xl mx-auto bg-red-50 border-2 border-red-200 p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] text-center shadow-xl">
+            <h3 class="text-2xl md:text-4xl font-black text-red-600 mb-4 md:mb-6 tracking-tighter uppercase italic">Only 2 Teams Allowed</h3>
+            <p class="text-sm md:text-2xl font-extrabold text-slate-600 mb-4 leading-snug">프로가 모든 일정을 1:1로 직접 케어하기 위해<br/><span class="text-slate-900 underline decoration-red-200 underline-offset-8">한 캠프당 딱 2팀</span>만 모십니다.</p>
+            <div class="inline-block px-5 py-2 bg-red-600 text-white rounded-full font-black text-[10px] md:text-sm uppercase tracking-widest mt-2">인원 마감 시 추가 모집은 없습니다.</div>
+        </div>
+    </section>
+
+    <!-- Instructor Section -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center bg-white p-8 md:p-16 rounded-[3rem] md:rounded-[4rem] shadow-2xl border border-slate-50 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-emerald-500"></div>
+                <div class="w-64 h-80 md:w-80 md:h-[450px] bg-slate-100 rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden shrink-0 shadow-2xl transform md:-rotate-3 transition-transform hover:rotate-0 duration-500">
+                    <img src="https://images.unsplash.com/photo-1593111774240-d529f12cf4bb?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover" alt="서수연 프로">
+                </div>
+                <div class="text-center md:text-left">
+                    <span class="px-5 py-2 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded-full mb-6 inline-block uppercase tracking-widest">KLPGA Class A Member</span>
+                    <h3 class="text-3xl md:text-5xl font-black mb-6 md:mb-10 italic tracking-tighter leading-tight italic uppercase underline decoration-emerald-200 decoration-4">서수연 프로</h3>
+                    <p class="text-base md:text-2xl font-black text-emerald-800 mb-8 md:mb-10 leading-relaxed italic">"필드 레슨은 공부가 아니라 여행이어야 합니다.<br/>가장 즐거운 방식으로 당신의 스코어를 바꿔드릴게요."</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3">
+                        <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] md:text-[12px] font-black text-slate-500 uppercase">강남 프라이빗 레슨 전문</span>
+                        <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] md:text-[12px] font-black text-slate-500 uppercase">누적 레슨 1,500+건</span>
+                        <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] md:text-[12px] font-black text-slate-500 uppercase">필드 전략 전문가</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum / Timeline -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-slate-900 text-white rounded-[2.5rem] md:rounded-[4rem] mx-3 md:mx-4 overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-full h-full -z-0 opacity-10">
+            <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-emerald-500 rounded-full blur-[120px]"></div>
+        </div>
+        <div class="text-center mb-12 md:mb-16 relative z-10">
+            <span class="text-emerald-400 font-black tracking-widest text-[10px] uppercase mb-4 block">Daily Schedule</span>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tighter italic uppercase text-white">Tour <span class="text-emerald-400">Timeline</span></h2>
+        </div>
+        <div class="max-w-3xl mx-auto space-y-4 md:space-y-6 relative z-10">
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] flex items-center gap-6 md:gap-10">
+                <div class="text-3xl md:text-5xl font-black text-emerald-400 shrink-0 italic">AM</div>
+                <div>
+                    <h4 class="font-black text-lg md:text-2xl mb-2 tracking-tight text-white uppercase italic">필드 스윙 & 루틴 교정</h4>
+                    <p class="text-slate-400 text-sm md:text-base leading-relaxed">첫 홀의 긴장감을 잡는 티샷 루틴과 에이밍법을 프로가 옆에서 직접 교정해 드립니다.</p>
+                </div>
+            </div>
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] flex items-center gap-6 md:gap-10">
+                <div class="text-3xl md:text-5xl font-black text-emerald-400 shrink-0 italic">PM</div>
+                <div>
+                    <h4 class="font-black text-lg md:text-2xl mb-2 tracking-tight text-white uppercase italic">상황별 코스 공략 전략</h4>
+                    <p class="text-slate-400 text-sm md:text-base leading-relaxed">제주 특유의 잔디와 경사지에서의 세컨샷 선택, 숏게임 어프로치 요령을 전수합니다.</p>
+                </div>
+            </div>
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] flex items-center gap-6 md:gap-10">
+                <div class="text-3xl md:text-5xl font-black text-emerald-400 shrink-0 italic">EVE</div>
+                <div>
+                    <h4 class="font-black text-lg md:text-2xl mb-2 tracking-tight text-white uppercase italic">VVIP 디너 & 라운드 피드백</h4>
+                    <p class="text-slate-400 text-sm md:text-base leading-relaxed">라운드 후 프로와 함께하는 식사. 당일 플레이의 모든 순간을 복기하며 전략을 완성합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Camp Detailed Info -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-[#fcfcf9] rounded-[2.5rem] md:rounded-[4rem] mx-3 md:mx-4 mt-16">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 md:mb-16">
+                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3 block">Details</span>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tighter uppercase italic">Camp <span class="text-emerald-600">Info</span></h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-slate-100 h-full">
+                    <h3 class="text-lg md:text-xl font-black mb-6 flex items-center gap-2 italic tracking-tighter text-slate-800 underline decoration-emerald-500 decoration-2 underline-offset-4">캠프 기본 정보</h3>
+                    <ul class="space-y-4 text-[13px] md:text-sm font-bold text-slate-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-500 w-4"></i> 제주 아덴힐 CC</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-500 w-4"></i> 1박 2일 프라이빗 투어</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-500 w-4"></i> 36홀 라운드</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-500 w-4"></i> 2인 플레이 밀착 코칭</li>
+                    </ul>
+                </div>
+                <div class="bg-emerald-50/50 p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-emerald-100 h-full">
+                    <h3 class="text-lg md:text-xl font-black mb-6 flex items-center gap-2 italic tracking-tighter text-emerald-800 underline decoration-emerald-500 decoration-2 underline-offset-4">포함 사항</h3>
+                    <ul class="space-y-4 text-[13px] md:text-sm font-bold text-emerald-900">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-600 w-4"></i> 36H 그린피/카트비</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-600 w-4"></i> 40평대 리조트 숙박</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-600 w-4"></i> 전 일정 중 조식</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="text-emerald-600 w-4"></i> 프로 동행 차량 에스코트</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-sm border border-slate-100 h-full">
+                    <h3 class="text-lg md:text-xl font-black mb-6 flex items-center gap-2 italic tracking-tighter text-slate-800 underline decoration-red-400 decoration-2 underline-offset-4">불포함 사항</h3>
+                    <ul class="space-y-4 text-[13px] md:text-sm font-bold text-slate-400">
+                        <li class="flex items-center gap-2">✖ 왕복 항공권</li>
+                        <li class="flex items-center gap-2">✖ 캐디피 (현장 정산)</li>
+                        <li class="flex items-center gap-2">✖ 일정 외 개인 경비</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-900 p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-xl text-white h-full relative overflow-hidden">
+                    <i data-lucide="plane" class="absolute -bottom-4 -right-4 w-24 h-24 text-white opacity-10 rotate-12"></i>
+                    <h3 class="text-lg md:text-xl font-black mb-6 flex items-center gap-2 italic tracking-tighter text-emerald-400 underline decoration-emerald-400 decoration-2 underline-offset-4">항공 안내</h3>
+                    <p class="text-xs md:text-sm font-bold text-slate-400 leading-relaxed mb-4">항공권은 개별 예약이며 상담 신청 후 프로님이 원활한 일정을 위한 권장 항공 편명을 직접 안내해 드립니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 md:mb-20">
+                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block">Testimonials</span>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tighter italic uppercase underline decoration-emerald-200 decoration-8 underline-offset-8">Reviews</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div class="card-3d p-8 md:p-12 italic font-bold text-slate-700 leading-relaxed text-sm md:text-lg relative">
+                    <i data-lucide="star" class="absolute top-6 right-6 md:top-10 md:right-10 text-amber-400 fill-amber-400"></i>
+                    "프로님이 1:1로 36홀 내내 옆에 계시니까 정말 든든했습니다. 에이밍 하나만 바꿨을 뿐인데 오비(OB)가 안 나기 시작했어요. 식사하며 나누는 골프 이야기도 너무 유익했습니다. 비용 이상의 가치가 충분해요!"
+                    <div class="mt-10 not-italic flex items-center gap-4">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700"><i data-lucide="user"></i></div>
+                        <div>
+                            <div class="font-black text-xs md:text-base text-slate-900 uppercase tracking-tighter">회원 김*준 님 (구력 2년)</div>
+                            <div class="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">Handicap: 22 / Adenhill CC</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-3d p-8 md:p-12 italic font-bold text-slate-700 leading-relaxed text-sm md:text-lg relative">
+                    <i data-lucide="star" class="absolute top-6 right-6 md:top-10 md:right-10 text-amber-400 fill-amber-400"></i>
+                    "일반적인 필드 레슨은 프로 얼굴 보기도 힘든데, 여긴 프로님이 직접 운전도 해주시고 식사까지 다 챙겨주시니 대접받는 느낌이었습니다. 레슨이 아니라 정말 프로와 함께하는 골프 여행 그 자체였어요!"
+                    <div class="mt-10 not-italic flex items-center gap-4">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700"><i data-lucide="user"></i></div>
+                        <div>
+                            <div class="font-black text-xs md:text-base text-slate-900 uppercase tracking-tighter">회원 이*혜 님 (구력 5년)</div>
+                            <div class="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">Handicap: 18 / Adenhill CC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="reveal py-16 md:py-24 px-5 md:px-6">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black text-center mb-12 md:mb-16 italic uppercase tracking-tighter">FAQ</h2>
+            <div class="space-y-4" id="faq-container">
+                <div class="faq-item bg-white rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm transition-all duration-300">
+                    <button class="w-full px-8 py-6 md:py-8 flex justify-between items-center text-left font-black text-slate-800 text-base md:text-xl" onclick="toggleFaq(this)">
+                        <span class="max-w-[85%] uppercase">백돌이(초보)도 참여가 가능한가요?</span>
+                        <i data-lucide="chevron-down" class="faq-icon text-emerald-500 transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-500 font-medium text-sm md:text-base leading-relaxed">
+                        <div class="pb-8">당연히 가능합니다. 오히려 잘못된 습관이 들기 전, 필드 위에서 프로에게 제대로 된 루틴과 코스 공략법을 배우면 스코어를 줄이는 속도가 비약적으로 빨라집니다.</div>
+                    </div>
+                </div>
+                <div class="faq-item bg-white rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm transition-all duration-300">
+                    <button class="w-full px-8 py-6 md:py-8 flex justify-between items-center text-left font-black text-slate-800 text-base md:text-xl" onclick="toggleFaq(this)">
+                        <span class="max-w-[85%] uppercase">혼자 신청해도 어색하지 않을까요?</span>
+                        <i data-lucide="chevron-down" class="faq-icon text-emerald-500 transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-500 font-medium text-sm md:text-base leading-relaxed">
+                        <div class="pb-8">참가자의 70%가 혼자 신청하십니다. 서수연 프로와 동반자가 한 팀이 되어 1박 2일 동안 한 가족처럼 즐거운 시간을 보내기 때문에 걱정하지 않으셔도 됩니다.</div>
+                    </div>
+                </div>
+                <div class="faq-item bg-white rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm transition-all duration-300">
+                    <button class="w-full px-8 py-6 md:py-8 flex justify-between items-center text-left font-black text-slate-800 text-base md:text-xl" onclick="toggleFaq(this)">
+                        <span class="max-w-[85%] uppercase">항공권은 어떻게 예약하면 되나요?</span>
+                        <i data-lucide="chevron-down" class="faq-icon text-emerald-500 transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-8 text-slate-500 font-medium text-sm md:text-base leading-relaxed">
+                        <div class="pb-8">항공권은 개별 예약을 원칙으로 합니다. 상담 신청을 남겨주시면 프로님이 직접 연락드려, 거주지에 맞춘 가장 합리적인 시간대와 항공편명을 추천해 드립니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Push Section -->
+    <section class="reveal py-16 md:py-32 px-5 md:px-6">
+        <div class="max-w-4xl mx-auto bg-slate-900 p-10 md:p-24 rounded-[3rem] md:rounded-[5rem] text-center shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full bg-emerald-500 opacity-5 -z-0"></div>
+            <h3 class="text-3xl md:text-6xl font-black text-white mb-6 md:mb-10 tracking-tighter italic uppercase z-10 relative leading-tight">이번 시즌 첫 제주 캠프<br/>절대 놓치지 마세요</h3>
+            <p class="text-xl md:text-3xl font-extrabold text-emerald-400 mb-6 md:mb-8 z-10 relative tracking-tight leading-snug">다음 캠프 일정은 아직 미정입니다.<br/><span class="text-slate-300">이번 기회를 놓치면 다음 시즌까지 기다려야 합니다.</span></p>
+            <p class="text-sm md:text-xl text-slate-500 mt-6 font-bold z-10 relative italic">"현재 실시간 상담 신청이 폭주하여 조기 마감될 수 있습니다."</p>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section id="apply" class="reveal py-16 md:py-24 bg-emerald-50 rounded-[3.5rem] md:rounded-[6rem] mx-3 md:mx-4 mb-24 pb-32">
+        <div class="max-w-2xl mx-auto bg-white p-8 md:p-16 rounded-[2.5rem] md:rounded-[4.5rem] shadow-2xl relative">
+            <div class="absolute -top-5 md:-top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 md:px-12 py-3 md:py-4 rounded-full font-black text-[10px] md:text-base tracking-widest shadow-2xl whitespace-nowrap uppercase italic tracking-[0.2em]">Priority Registration</div>
+            
+            <div class="text-center mb-10 md:mb-14">
+                <h3 class="text-3xl md:text-4xl font-black mb-4 text-slate-900 tracking-tight leading-tight">제주 캠프 상담 신청</h3>
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-full text-[11px] md:text-sm font-black animate-pulse border border-red-100">
+                    <i data-lucide="users" class="w-4 h-4"></i> 현재 상담 대기 순번: <span id="waiting-count">24</span>번째
+                </div>
+            </div>
+
+            <form class="space-y-5 md:space-y-7" onsubmit="event.preventDefault(); alert('상담 예약이 접수되었습니다! 서수연 프로가 10분 이내로 연락드립니다.');">
+                <div class="space-y-2 md:space-y-3">
+                    <label class="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Choice of Date</label>
+                    <div class="relative">
+                        <select class="w-full px-6 py-4 md:px-10 md:py-6 bg-slate-50 border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] font-black outline-none appearance-none cursor-pointer focus:ring-4 focus:ring-emerald-500/20 transition-all text-slate-800 text-sm md:text-lg shadow-inner-soft">
+                            <option>3월 25-26일 (평일) - 마지막 1석 남음</option>
+                            <option>3월 28-29일 (주말) - 2인 신청 가능 (마감직전)</option>
+                            <option>별도 일정 조율 상담 희망</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 w-5"></i>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="space-y-2 md:space-y-3">
+                        <label class="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Your Name</label>
+                        <input required placeholder="성함" class="w-full px-6 py-4 md:px-10 md:py-6 bg-slate-50 border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] font-bold outline-none focus:ring-4 focus:ring-emerald-500/20 transition-all text-slate-800 placeholder-slate-300 text-sm md:text-lg shadow-inner-soft" />
+                    </div>
+                    <div class="space-y-2 md:space-y-3">
+                        <label class="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Phone Number</label>
+                        <input required type="tel" placeholder="010-0000-0000" class="w-full px-6 py-4 md:px-10 md:py-6 bg-slate-50 border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] font-bold outline-none focus:ring-4 focus:ring-emerald-500/20 transition-all text-slate-800 placeholder-slate-300 text-sm md:text-lg shadow-inner-soft" />
+                    </div>
+                </div>
+                <div class="space-y-2 md:space-y-3">
+                    <label class="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Golf Profile</label>
+                    <textarea placeholder="현재 구력, 평균 타수 등 고민을 적어주세요." class="w-full px-6 py-4 md:px-10 md:py-6 bg-slate-50 border border-slate-100 rounded-[1.5rem] md:rounded-[2.5rem] h-32 md:h-44 font-bold outline-none focus:ring-4 focus:ring-emerald-500/20 transition-all text-slate-800 placeholder-slate-300 text-sm md:text-lg shadow-inner-soft"></textarea>
+                </div>
+                <button type="submit" class="btn-premium w-full py-6 md:py-8 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xl md:text-3xl rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-emerald-600/30 transform active:scale-95 transition-all mt-6 uppercase italic tracking-wider">
+                    캠프 자리 확보하기 ✨
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 md:py-32 text-center bg-white border-t border-slate-100 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-3xl md:text-5xl font-black text-emerald-700 mb-8 md:mb-12 italic tracking-tighter">스승님</div>
+            <p class="text-slate-400 font-black text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.8em] uppercase mb-10 leading-relaxed italic">© 2026 SSNIM JEJU PRIVATE CAMP TOUR</p>
+            <p class="text-slate-400 text-xs md:text-base font-medium max-w-2xl mx-auto leading-relaxed px-4 opacity-70">본 캠프는 서수연 프로와 스승님이 협력하여 제공하는 프리미엄 필드 투어 서비스입니다. 모든 권리는 스승님에게 있으며 무단 복제를 금지합니다.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="fixed bottom-6 left-5 right-5 z-[90] flex md:hidden shadow-2xl">
+        <button onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})" class="flex-1 py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black text-lg shadow-[0_20px_40px_rgba(16,185,129,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2 p-5 border-b-4 border-emerald-800">
+            제주 캠프 상담 신청 <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Live Toast -->
+    <div id="live-toast" class="fixed bottom-32 left-4 right-4 md:left-10 md:right-auto md:bottom-10 z-[100] hidden">
+        <div class="glass p-5 rounded-[2rem] shadow-2xl flex items-center gap-5 max-w-full md:max-w-[320px] border-emerald-100 border-2">
+            <div class="w-12 h-12 md:w-14 md:h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-200">
+                <i data-lucide="bell" class="w-6 h-6 md:w-7 md:h-7 animate-pulse"></i>
+            </div>
+            <div>
+                <p class="text-[13px] md:text-sm font-black text-slate-800 leading-snug">
+                    <span id="toast-name" class="text-emerald-600">최*윤</span> 님 <span id="toast-action">방금 상담 신청 완료!</span>
+                </p>
+                <p id="toast-time" class="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest">방금 전</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Lucide Icons
+        lucide.createIcons();
+
+        // Reveal Animation
+        const reveals = document.querySelectorAll('.reveal');
+        const scrollReveal = () => {
+            reveals.forEach(r => {
+                const triggerPoint = window.innerHeight * 0.85;
+                const revealTop = r.getBoundingClientRect().top;
+                if (revealTop < triggerPoint) r.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', scrollReveal);
+        scrollReveal(); // Initial check
+
+        // Viewer Counter
+        let count = 32;
+        setInterval(() => {
+            count += Math.floor(Math.random() * 5) - 2;
+            document.getElementById('viewer-count').innerText = Math.max(28, Math.min(48, count));
+        }, 4000);
+
+        // Header Timer
+        let time = 23 * 3600 + 59 * 60 + 59;
+        setInterval(() => {
+            if (time > 0) time--;
+            const h = Math.floor(time/3600).toString().padStart(2,'0');
+            const m = Math.floor((time%3600)/60).toString().padStart(2,'0');
+            const s = (time%60).toString().padStart(2,'0');
+            document.getElementById('header-timer').innerText = `${h}:${m}:${s}`;
+        }, 1000);
+
+        // FAQ Toggle
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        }
+
+        // Live Toast
+        const names = ["김*준", "이*혜", "박*민", "정*진", "최*아", "강*우"];
+        const actions = ["방금 상담 신청 완료!", "제주 캠프 예약 대기 중", "동반 신청 문의 완료!", "1차 캠프 확정 상담 중"];
+        const toast = document.getElementById('live-toast');
+        
+        setInterval(() => {
+            document.getElementById('toast-name').innerText = names[Math.floor(Math.random()*names.length)];
+            document.getElementById('toast-action').innerText = actions[Math.floor(Math.random()*actions.length)];
+            
+            toast.classList.remove('hidden');
+            toast.classList.add('animate-bounce-in');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('animate-bounce-in');
+            }, 5000);
+        }, 10000);
+
+        // Waiting Count
+        let waiting = 24;
+        setInterval(() => {
+            if(Math.random() > 0.7) {
+                waiting++;
+                document.getElementById('waiting-count').innerText = waiting;
+            }
+        }, 15000);
+    </script>
+</body>
+</html>
 
 
