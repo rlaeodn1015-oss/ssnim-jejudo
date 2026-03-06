@@ -123,6 +123,15 @@
         .log-item {
             animation: logEntry 0.5s ease-out forwards;
         }
+
+        /* Custom Checkbox Style */
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #10b981;
+            border-color: #10b981;
+        }
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
     </style>
 </head>
 <body class="antialiased text-slate-900">
@@ -142,7 +151,6 @@
                     캠프 일정, 구성, 항공권 등 궁금한 모든 것을 스승님 담당자가 직접 답변해 드립니다. 지금 바로 1:1 상담을 시작하세요.
                 </p>
                 <div class="space-y-3">
-                    <!-- Updated Phone Link -->
                     <button onclick="location.href='tel:02-1551-0641'" class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-black flex items-center justify-center gap-2 shadow-lg shadow-emerald-200">
                         <i data-lucide="phone" class="w-5 h-5 text-emerald-200"></i> 전화 상담 연결 (02-1551-0641)
                     </button>
@@ -154,11 +162,58 @@
         </div>
     </div>
 
+    <!-- 개인정보처리방침 모달 -->
+    <div id="privacy-modal" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/80 backdrop-blur-md hidden px-6">
+        <div class="bg-white rounded-[2.5rem] p-8 md:p-10 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl relative border border-white/20">
+            <button onclick="closePrivacy()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-900 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="prose prose-slate max-w-none">
+                <h3 class="text-2xl font-black mb-6 tracking-tight">개인정보처리방침</h3>
+                <div class="text-slate-600 text-sm leading-relaxed space-y-4">
+                    <p><strong>'스승님'(이하 '회사')</strong>은 고객님의 개인정보를 중요시하며, "개인정보보호법" 등 관련 법령을 준수하고 있습니다.</p>
+                    
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-1">1. 수집하는 개인정보 항목</h4>
+                        <p>회사는 상담 신청 및 서비스 제공을 위해 아래와 같은 개인정보를 수집하고 있습니다.</p>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li>필수항목: 성함, 연락처, 캠프 희망 일정</li>
+                            <li>선택항목: 골프 프로필(구력, 타수 등 고민사항)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-1">2. 개인정보의 수집 및 이용 목적</h4>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li>제주 VVIP 골프 캠프 상담 및 예약 안내</li>
+                            <li>본인 확인 및 원활한 의사소통 경로 확보</li>
+                            <li>서비스 이용에 따른 민원 사항 처리</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-1">3. 개인정보의 보유 및 이용 기간</h4>
+                        <p>개인정보 수집 및 이용 목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 아래와 같이 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다.</p>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li>보유 기간: 상담 완료 후 1년 또는 정보 주체의 파기 요청 시까지</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-900 mb-1">4. 동의 거부 권리 및 불이익</h4>
+                        <p>귀하는 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다. 단, 필수 항목 동의 거부 시 상담 신청 서비스 이용이 제한될 수 있습니다.</p>
+                    </div>
+                </div>
+                <button onclick="closePrivacy()" class="w-full mt-8 py-4 bg-slate-900 text-white rounded-2xl font-black">확인했습니다</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <nav class="fixed top-3 left-3 right-3 md:top-4 md:left-4 md:right-4 z-[100]">
         <div class="max-w-6xl mx-auto glass h-16 md:h-20 rounded-[1.5rem] md:rounded-[2.5rem] px-5 md:px-8 flex justify-between items-center shadow-xl">
             <div class="text-xl md:text-2xl font-black tracking-tighter text-emerald-700 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                스승님 <span class="text-slate-300 font-normal text-[9px] md:text-[10px] uppercase ml-1 tracking-widest text-slate-400">Jeju VVIP GOLF CAMPr</span>
+                스승님 <span class="text-slate-300 font-normal text-[9px] md:text-[10px] uppercase ml-1 tracking-widest text-slate-400">Jeju VVIP GOLF CAMP</span>
             </div>
             <div class="flex items-center gap-2 md:gap-6">
                 <div class="hidden sm:flex items-center gap-3 py-1.5 px-3 bg-emerald-50 rounded-full border border-emerald-100 transition-all duration-500">
@@ -219,7 +274,7 @@
                 </div>
                 <p class="text-slate-500 font-bold text-sm">최근 2시간 동안 15명이 상담 신청을 남겼습니다.</p>
             </div>
-            <p class="text-slate-400 font-black text-xs uppercase tracking-widest text-slate-400">3월 25~26 1차 / 3월 28~299 2차 한정</p>
+            <p class="text-slate-400 font-black text-xs uppercase tracking-widest">3월 25~26 1차 / 3월 28~29 2차 한정</p>
         </div>
     </div>
 
@@ -227,20 +282,20 @@
     <div class="max-w-6xl mx-auto px-5 md:px-6 mb-16 md:mb-24 mt-8 md:mt-12">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             <div class="bg-red-50 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
-                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400">3/25~26 잔여</div>
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2">3/25~26 잔여</div>
                 <div class="text-base md:text-2xl font-black text-red-500 tracking-tighter">선착순 1인</div>
             </div>
             <div class="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
-                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400">3/28~29 주말</div>
-                <div class="text-base md:text-2xl font-black text-slate-900 tracking-tighter text-slate-900">신청 가능</div>
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2">3/28~29 주말</div>
+                <div class="text-base md:text-2xl font-black text-slate-900 tracking-tighter">신청 가능</div>
             </div>
             <div class="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
-                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400">레슨 방식</div>
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2">레슨 방식</div>
                 <div class="text-base md:text-2xl font-black text-emerald-600 tracking-tighter">2인 집중</div>
             </div>
             <div class="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm border border-slate-50 text-center flex flex-col items-center justify-center transition-all hover:shadow-xl">
-                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2 text-slate-400 text-slate-400">누적 상담</div>
-                <div class="text-base md:text-2xl font-black text-slate-900 tracking-tighter text-slate-900">300건+</div>
+                <div class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-2">누적 상담</div>
+                <div class="text-base md:text-2xl font-black text-slate-900 tracking-tighter">300건+</div>
             </div>
         </div>
     </div>
@@ -249,7 +304,7 @@
     <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-slate-50 rounded-[2.5rem] md:rounded-[4rem] mx-3 md:mx-4">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-12 md:mb-16">
-                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3 md:mb-4 block text-emerald-500">The Difference</span>
+                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3 md:mb-4 block">The Difference</span>
                 <h2 class="text-3xl md:text-5xl font-black tracking-tighter leading-tight text-slate-900">일반 캠프와는 차원이 다른<br/><span class="text-emerald-600 italic">VVIP 올인원 케어</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
@@ -258,28 +313,28 @@
                         <i data-lucide="users"></i>
                     </div>
                     <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight text-slate-900">2인 플레이</h3>
-                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium text-slate-500">4인 북적이는 플레이가 아닌, 프로와 2인플레이로 진행하는 프라이빗 라운드</p>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">4인 북적이는 플레이가 아닌, 프로와 2인플레이로 진행하는 프라이빗 라운드</p>
                 </div>
                 <div class="card-3d p-8 md:p-10 flex flex-col items-start text-left">
                     <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 text-emerald-600 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-8 shadow-inner-soft">
                         <i data-lucide="car"></i>
                     </div>
                     <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight text-slate-900">전 일정 스승님 직접 운전</h3>
-                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium text-slate-500">서수연스승님이 직접 차량으로 에스코트합니다. 당신은 오직 골프와 여행에만 집중하세요.</p>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">서수연스승님이 직접 차량으로 에스코트합니다. 당신은 오직 골프와 여행에만 집중하세요.</p>
                 </div>
                 <div class="card-3d p-8 md:p-10 flex flex-col items-start text-left">
                     <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 text-emerald-600 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-8 shadow-inner-soft">
                         <i data-lucide="shield-check"></i>
                     </div>
                     <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight text-slate-900">실전 36홀 집중 레슨</h3>
-                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium text-slate-500">36홀 내내 프로가 옆에서 당신의 샷, 에이밍, 코스 공략을 실시간으로 교정합니다.</p>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">36홀 내내 프로가 옆에서 당신의 샷, 에이밍, 코스 공략을 실시간으로 교정합니다.</p>
                 </div>
                 <div class="card-3d p-8 md:p-10 flex flex-col items-start text-left">
                     <div class="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 text-emerald-600 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-8 shadow-inner-soft">
                         <i data-lucide="utensils"></i>
                     </div>
                     <h3 class="text-xl md:text-2xl font-black mb-3 md:mb-4 tracking-tight text-slate-900">식사까지 함께하는 투어</h3>
-                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium text-slate-500">라운드 후 저녁 식사까지 프로와 함께하며 필드 위 비하인드 노하우를 공유합니다.</p>
+                    <p class="text-sm md:text-base text-slate-500 leading-relaxed font-medium">라운드 후 저녁 식사까지 프로와 함께하며 필드 위 비하인드 노하우를 공유합니다.</p>
                 </div>
             </div>
         </div>
@@ -289,7 +344,7 @@
     <section class="reveal py-16 md:py-24 px-5 md:px-6">
         <div class="max-w-6xl mx-auto text-center">
             <div class="mb-12 md:mb-16">
-                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3 md:mb-4 block text-emerald-500">Real Field Training</span>
+                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-3 md:mb-4 block">Real Field Training</span>
                 <h2 class="text-3xl md:text-5xl font-black tracking-tighter leading-tight text-slate-900">필드에서 발생하는<br/><span class="text-emerald-600 italic">모든 상황을 내 것으로</span></h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 max-w-4xl mx-auto">
@@ -312,17 +367,16 @@
                     <img src="https://images.unsplash.com/photo-1593111774240-d529f12cf4bb?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover" alt="서수연 프로">
                 </div>
                 <div class="text-center md:text-left flex-1">
-                    <span class="px-5 py-2 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded-full mb-6 inline-block uppercase tracking-widest text-emerald-700 uppercase tracking-widest">KLPGA Class A Member</span>
-                    <h3 class="text-3xl md:text-5xl font-black mb-6 md:mb-10 italic tracking-tighter leading-tight italic uppercase underline decoration-emerald-200 decoration-4 text-slate-900">서수연 프로</h3>
-                    <p class="text-base md:text-2xl font-black text-emerald-800 mb-8 md:mb-10 leading-relaxed italic text-emerald-800">"필드 레슨은 공부가 아니라 여행이어야 합니다.<br/>가장 즐거운 방식으로 당신의 스코어를 바꿔드릴게요💚"</p>
+                    <span class="px-5 py-2 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded-full mb-6 inline-block uppercase tracking-widest">KLPGA Class A Member</span>
+                    <h3 class="text-3xl md:text-5xl font-black mb-6 md:mb-10 italic tracking-tighter leading-tight underline decoration-emerald-200 decoration-4 text-slate-900">서수연 프로</h3>
+                    <p class="text-base md:text-2xl font-black text-emerald-800 mb-8 md:mb-10 leading-relaxed italic">"필드 레슨은 공부가 아니라 여행이어야 합니다.<br/>가장 즐거운 방식으로 당신의 스코어를 바꿔드릴게요💚"</p>
                     
                     <div class="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3 mb-10">
                         <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] md:text-[12px] font-black text-slate-500 uppercase">강남 프라이빗 레슨 전문</span>
                         <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] md:text-[12px] font-black text-slate-500 uppercase">누적 레슨 3,500+건</span>
-                        <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] md:text-[12px] font-black text-slate-500 uppercase text-slate-500">필드 스코어 변화 전문가</span>
+                        <span class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] md:text-[12px] font-black text-slate-500 uppercase">필드 스코어 변화 전문가</span>
                     </div>
 
-                    <!-- New Instagram CTA Button -->
                     <a href="https://www.instagram.com/s.o_o.yeon/" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 bg-white border border-slate-200 rounded-2xl text-base font-black text-slate-700 shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all group">
                         <i data-lucide="instagram" class="w-5 h-5 text-pink-500 group-hover:scale-110 transition-transform"></i> 
                         서수연 스승님 인스타그램 구경하기
@@ -339,17 +393,17 @@
         </div>
         
         <div class="text-center mb-12 md:mb-20 relative z-10">
-            <span class="text-emerald-400 font-black tracking-widest text-[10px] uppercase mb-3 md:mb-4 block text-emerald-400">Special Offer</span>
+            <span class="text-emerald-400 font-black tracking-widest text-[10px] uppercase mb-3 md:mb-4 block">Special Offer</span>
             <h2 class="text-3xl md:text-6xl font-black tracking-tighter leading-tight text-white">오직 스승님 앱 회원 한정<br/><span class="text-emerald-400 font-black">특별🎉 혜택가</span></h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 relative z-10">
             <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] flex flex-col justify-between">
                 <div>
-                    <h3 class="text-lg md:text-2xl font-black mb-6 md:mb-8 italic text-slate-300 tracking-tight text-slate-300 tracking-tight">Full-Package Price</h3>
+                    <h3 class="text-lg md:text-2xl font-black mb-6 md:mb-8 italic text-slate-300 tracking-tight">Full-Package Price</h3>
                     <div class="space-y-1 md:space-y-2 mb-8 md:mb-10">
-                        <p class="text-slate-500 font-bold line-through text-base md:text-xl italic tracking-tighter text-slate-500 italic tracking-tighter">정가 1,700,000원</p>
-                        <p class="text-4xl md:text-7xl font-black text-white tracking-tighter text-white tracking-tighter">1,500,000<span class="text-xl md:text-2xl ml-1 md:ml-2">원</span></p>
+                        <p class="text-slate-500 font-bold line-through text-base md:text-xl italic tracking-tighter">정가 1,700,000원</p>
+                        <p class="text-4xl md:text-7xl font-black text-white tracking-tighter">1,500,000<span class="text-xl md:text-2xl ml-1 md:ml-2">원</span></p>
                     </div>
                 </div>
                 <ul class="space-y-3 md:space-y-4 text-slate-400 font-bold text-xs md:text-sm">
@@ -365,15 +419,15 @@
                     <div class="flex gap-4 md:gap-5 items-start">
                         <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center shrink-0"><i data-lucide="star" class="text-white"></i></div>
                         <div>
-                            <p class="text-lg md:text-xl font-black mb-1 text-white text-white">스승님 포인트 5만P</p>
-                            <p class="text-emerald-100/70 text-[11px] md:text-sm font-medium text-emerald-100/70 text-[11px] md:text-sm font-medium">캠프 후 앱 레슨 결제 시 사용 가능</p>
+                            <p class="text-lg md:text-xl font-black mb-1 text-white">스승님 포인트 5만P</p>
+                            <p class="text-emerald-100/70 text-[11px] md:text-sm font-medium">캠프 후 앱 레슨 결제 시 사용 가능</p>
                         </div>
                     </div>
                     <div class="flex gap-4 md:gap-5 items-start">
                         <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center shrink-0"><i data-lucide="shield-check" class="text-white"></i></div>
                         <div>
-                            <p class="text-lg md:text-xl font-black mb-1 text-white text-white">시그니처 롱티 세트</p>
-                            <p class="text-emerald-100/70 text-[11px] md:text-sm font-medium text-emerald-100/70 text-[11px] md:text-sm font-medium">캠프 참가자만을 위한 스승님의 특별 선물</p>
+                            <p class="text-lg md:text-xl font-black mb-1 text-white">시그니처 롱티 세트</p>
+                            <p class="text-emerald-100/70 text-[11px] md:text-sm font-medium">캠프 참가자만을 위한 스승님의 특별 선물</p>
                         </div>
                     </div>
                 </div>
@@ -384,43 +438,41 @@
     <!-- Reviews Section -->
     <section class="reveal py-16 md:py-24 px-5 md:px-6 bg-white mt-16">
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12 md:mb-20 text-center">
-                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block text-emerald-500">Testimonials</span>
+            <div class="text-center mb-12 md:mb-20">
+                <span class="text-emerald-500 font-black tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block">Testimonials</span>
                 <h2 class="text-3xl md:text-5xl font-black tracking-tighter italic uppercase underline decoration-emerald-200 decoration-8 underline-offset-8 leading-tight text-slate-900">진짜 다녀온<br/>회원들의 리얼 스토리</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-                <!-- Review Items (Previous content remained) -->
                 <div class="card-3d p-8 md:p-10 italic font-bold text-slate-700 leading-relaxed text-sm md:text-base relative border border-slate-50">
                     <i data-lucide="star" class="absolute top-6 right-6 text-amber-400 fill-amber-400 w-4 h-4"></i>
                     "티샷에서 에이밍 하나만 잡았는데 오비가 안나요. 프로님이 운전해주시는 차 타고 이동하니 정말 VVIP가 된 기분이었습니다ㅎㅎ"
-                    <div class="mt-8 not-italic flex items-center gap-3 text-slate-900">
+                    <div class="mt-8 not-italic flex items-center gap-3">
                         <div class="w-10 h-10 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-600"><i data-lucide="user"></i></div>
                         <div>
-                            <div class="font-black text-xs">회원 김*준 (구력 3년)</div>
-                            <div class="text-[9px] text-slate-400 font-bold uppercase text-slate-400">핸디캡: 22</div>
+                            <div class="font-black text-xs text-slate-900">회원 김*준 (구력 3년)</div>
+                            <div class="text-[9px] text-slate-400 font-bold uppercase">핸디캡: 22</div>
                         </div>
                     </div>
                 </div>
-                <!-- ... additional reviews ... -->
                 <div class="card-3d p-8 md:p-10 italic font-bold text-slate-700 leading-relaxed text-sm md:text-base relative border border-slate-50 lg:scale-105 shadow-2xl">
                     <i data-lucide="star" class="absolute top-6 right-6 text-amber-400 fill-amber-400 w-4 h-4"></i>
                     "벙커에서 항상 못나오는데, 이번 캠프에서 프로님이 알려준 스윙 하나로 벙커 탈출은 물론 핀에 잘 가져다 놉니다. 무조건 추천합니다!"
-                    <div class="mt-8 not-italic flex items-center gap-3 text-slate-900">
+                    <div class="mt-8 not-italic flex items-center gap-3">
                         <div class="w-10 h-10 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-600"><i data-lucide="user"></i></div>
                         <div>
-                            <div class="font-black text-xs">회원 정*민 (구력 2년)</div>
-                            <div class="text-[9px] text-slate-400 font-bold uppercase text-slate-400">핸디캡: 20</div>
+                            <div class="font-black text-xs text-slate-900">회원 정*민 (구력 2년)</div>
+                            <div class="text-[9px] text-slate-400 font-bold uppercase">핸디캡: 20</div>
                         </div>
                     </div>
                 </div>
                 <div class="card-3d p-8 md:p-10 italic font-bold text-slate-700 leading-relaxed text-sm md:text-base relative border border-slate-50 text-slate-700 leading-relaxed">
-                    <i data-lucide="star" class="absolute top-6 right-6 text-amber-400 fill-amber-400 w-4 h-4 text-amber-400 fill-amber-400 w-4 h-4"></i>
+                    <i data-lucide="star" class="absolute top-6 right-6 text-amber-400 fill-amber-400 w-4 h-4"></i>
                     "혼자 가서 걱정했는데 프로님이 너무 편하게 대해주셔서 금방 적응했어요. 제주도의 맛집까지 섭렵한 완벽한 힐링 골프 투어였습니다💗"
-                    <div class="mt-8 not-italic flex items-center gap-3 text-slate-900">
+                    <div class="mt-8 not-italic flex items-center gap-3">
                         <div class="w-10 h-10 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-600"><i data-lucide="user"></i></div>
                         <div>
                             <div class="font-black text-xs text-slate-900">회원 이*영 (구력 1년)</div>
-                            <div class="text-[9px] text-slate-400 font-bold uppercase text-slate-400">핸디캡: 28</div>
+                            <div class="text-[9px] text-slate-400 font-bold uppercase">핸디캡: 28</div>
                         </div>
                     </div>
                 </div>
@@ -515,28 +567,28 @@
             
             <!-- Real-time Application Log -->
             <div class="w-full lg:w-1/3 bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl h-fit">
-                <h4 class="text-xl font-black mb-8 tracking-tighter flex items-center gap-2 text-slate-900">
+                <h4 class="text-xl font-black mb-8 tracking-tighter flex items-center gap-2">
                     <i data-lucide="clipboard-list" class="text-emerald-600"></i> 실시간 신청 현황
                 </h4>
                 <div id="live-log-container" class="space-y-4">
                     <!-- Logs will be injected here -->
                 </div>
                 <div class="mt-10 p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1 text-slate-400 uppercase tracking-widest mb-1">상담 대기 인원</p>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">상담 대기 인원</p>
                     <p class="text-2xl font-black text-emerald-700">현재 <span id="waiting-count">14</span>명 대기 중</p>
                 </div>
             </div>
 
             <!-- Main Form -->
             <div class="w-full lg:w-2/3 bg-white p-8 md:p-16 rounded-[2.5rem] md:rounded-[4.5rem] shadow-2xl relative">
-                <div class="absolute -top-5 md:-top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 md:px-12 py-3 md:py-4 rounded-full font-black text-[10px] md:text-base tracking-widest shadow-2xl whitespace-nowrap uppercase italic tracking-[0.2em] text-white">Priority Registration</div>
+                <div class="absolute -top-5 md:-top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-8 md:px-12 py-3 md:py-4 rounded-full font-black text-[10px] md:text-base tracking-widest shadow-2xl whitespace-nowrap uppercase italic tracking-[0.2em]">Priority Registration</div>
                 
                 <div class="text-center mb-10 md:mb-14">
-                    <h3 class="text-3xl md:text-4xl font-black mb-4 text-slate-900 tracking-tight leading-tight italic text-slate-900 tracking-tight">당신의 인생 라운드가<br/>지금 제주에서 시작됩니다</h3>
-                    <p class="text-slate-400 font-bold text-sm text-slate-400">폼을 작성하시면 확인하는대로 스승님 운영팀이 연락드립니다.</p>
+                    <h3 class="text-3xl md:text-4xl font-black mb-4 text-slate-900 tracking-tight leading-tight italic">당신의 인생 라운드가<br/>지금 제주에서 시작됩니다</h3>
+                    <p class="text-slate-400 font-bold text-sm">폼을 작성하시면 확인하는대로 스승님 운영팀이 연락드립니다.</p>
                 </div>
 
-                <form class="space-y-5 md:space-y-7 text-slate-900" onsubmit="event.preventDefault(); alert('상담 예약이 접수되었습니다! 서수연 프로가 곧 연락드립니다.');">
+                <form id="applyForm" class="space-y-5 md:space-y-7" onsubmit="handleApply(event)">
                     <div class="space-y-2 md:space-y-3">
                         <label class="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Choice of Date</label>
                         <div class="relative">
@@ -562,6 +614,21 @@
                         <label class="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Golf Profile</label>
                         <textarea placeholder="현재 구력, 평균 타수 등 고민을 적어주세요." class="w-full px-6 py-4 md:px-10 md:py-6 bg-slate-50 border border-slate-100 rounded-[1.5rem] md:rounded-[2.5rem] h-32 md:h-44 font-bold outline-none focus:ring-4 focus:ring-emerald-500/20 transition-all text-slate-800 placeholder-slate-300 text-sm md:text-lg shadow-inner-soft"></textarea>
                     </div>
+
+                    <!-- 개인정보 수집 동의 체크박스 추가 -->
+                    <div class="flex items-center gap-3 px-2">
+                        <label class="flex items-center cursor-pointer group">
+                            <input type="checkbox" required class="hidden peer">
+                            <div class="w-6 h-6 border-2 border-slate-200 rounded-lg flex items-center justify-center peer-checked:bg-emerald-600 peer-checked:border-emerald-600 transition-all">
+                                <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                            </div>
+                            <span class="ml-3 text-sm font-bold text-slate-500 group-hover:text-slate-800 transition-colors">
+                                개인정보 수집 및 이용에 동의합니다
+                            </span>
+                        </label>
+                        <button type="button" onclick="showPrivacy()" class="text-xs font-black text-slate-400 underline decoration-slate-300 underline-offset-4 hover:text-emerald-600">내용 보기</button>
+                    </div>
+
                     <button type="submit" class="btn-premium w-full py-6 md:py-8 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xl md:text-3xl rounded-[2rem] md:rounded-[2.5rem] shadow-xl shadow-emerald-600/30 transform active:scale-95 transition-all mt-6 uppercase italic tracking-wider">
                         캠프 자리 확보하기✨
                     </button>
@@ -574,12 +641,17 @@
     <footer class="py-20 md:py-32 text-center bg-white border-t border-slate-100 px-6">
         <div class="max-w-6xl mx-auto text-slate-400">
             <div class="text-3xl md:text-5xl font-black text-emerald-700 mb-8 md:mb-12 italic tracking-tighter">스승님</div>
+            <div class="flex justify-center gap-6 mb-10">
+                <button onclick="showPrivacy()" class="text-xs font-black text-slate-500 hover:text-emerald-600">개인정보처리방침</button>
+                <span class="text-slate-200">|</span>
+                <span class="text-xs font-bold">이용약관</span>
+            </div>
             <p class="font-black text-[10px] md:text-[11px] tracking-[0.5em] md:tracking-[0.8em] uppercase mb-10 leading-relaxed italic">© 2026 SSNIM JEJU VVIP GOLF CAMP</p>
-            <p class="text-xs md:text-base font-medium max-w-2xl mx-auto leading-relaxed px-4 opacity-70 leading-relaxed px-4 opacity-70">본 캠프는 서수연 프로와 스승님이 협력하여 제공하는 프리미엄 VVIP 제주 캠프입니다. 모든 권리는 스승님에게 있으며 무단 복제를 금지합니다.</p>
+            <p class="text-xs md:text-base font-medium max-w-2xl mx-auto leading-relaxed px-4 opacity-70">본 캠프는 서수연 프로와 스승님이 협력하여 제공하는 프리미엄 VVIP 제주 캠프입니다. 모든 권리는 스승님에게 있으며 무단 복제를 금지합니다.</p>
         </div>
     </footer>
 
-    <!-- Mobile Sticky CTA (Updated Phone Link) -->
+    <!-- Mobile Sticky CTA -->
     <div class="fixed bottom-6 left-5 right-5 z-[90] flex md:hidden gap-2">
         <button onclick="location.href='tel:02-1551-0641'" class="w-16 h-16 bg-slate-900 text-white rounded-[1.5rem] flex items-center justify-center shadow-xl">
             <i data-lucide="phone" class="w-6 h-6 text-white"></i>
@@ -599,7 +671,7 @@
                 <p class="text-[13px] md:text-sm font-black text-slate-800 leading-snug">
                     <span id="toast-name" class="text-emerald-600">최*윤</span> 님 <span id="toast-action">방금 상담 신청 완료!</span>
                 </p>
-                <p id="toast-time" class="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest text-slate-400 tracking-widest">방금 전</p>
+                <p id="toast-time" class="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest">방금 전</p>
             </div>
         </div>
     </div>
@@ -670,7 +742,6 @@
                 logContainer.removeChild(logContainer.lastChild);
             }
         }
-        // Initial logs
         for(let i=0; i<4; i++) addLogEntry();
         setInterval(addLogEntry, 12000);
 
@@ -681,8 +752,29 @@
         function closePopup() {
             document.getElementById('concierge-popup').classList.add('hidden');
         }
-        // Trigger popup after 20 seconds
         setTimeout(showPopup, 20000);
+
+        // Privacy Modal Functions
+        function showPrivacy() {
+            document.getElementById('privacy-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePrivacy() {
+            document.getElementById('privacy-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Form Submit Handler
+        function handleApply(e) {
+            e.preventDefault();
+            // 법적 효력을 위해 alert 전 확인 로직
+            const checkbox = e.target.querySelector('input[type="checkbox"]');
+            if(!checkbox.checked) {
+                alert('개인정보 수집 및 이용에 동의해주세요.');
+                return;
+            }
+            alert('상담 예약이 접수되었습니다! 서수연 프로가 곧 연락드립니다.');
+        }
 
         // Live Toast
         const toast = document.getElementById('live-toast');
@@ -711,11 +803,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
