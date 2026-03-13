@@ -262,6 +262,13 @@
         카카오톡 바로 문의
     </a>
 
+                <!-- 공유 CTA -->
+<button onclick="sharePage()"
+class="w-full sm:w-auto px-10 py-5 md:px-12 md:py-6 bg-white border border-slate-200 text-slate-800 rounded-[1.5rem] md:rounded-[2rem] font-black text-xl md:text-2xl flex items-center justify-center gap-3 shadow-lg transform hover:scale-105">
+    <i data-lucide="share-2" class="w-5 md:w-6"></i>
+    같이 갈 친구에게 공유
+</button>
+
 </div>
         
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10 opacity-40">
@@ -797,9 +804,27 @@ class="w-full px-6 py-4 md:px-10 md:py-6 bg-slate-50 border border-slate-100 rou
                 document.getElementById('waiting-count').innerText = waiting;
             }
         }, 18000);
+
+        function sharePage() {
+
+const shareData = {
+title: "스승님 제주 VVIP 골프 캠프",
+text: "서수연 프로와 함께하는 제주 1박2일 VVIP 골프 레슨",
+url: window.location.href
+};
+
+if (navigator.share) {
+navigator.share(shareData);
+} else {
+navigator.clipboard.writeText(window.location.href);
+alert("링크가 복사되었습니다!");
+}
+
+}
     </script>
 </body>
 </html>
+
 
 
 
